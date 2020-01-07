@@ -1,0 +1,38 @@
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+*.DS_Store
+out/
+logs/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Cache of project
+.gradletasknamecache
+
+# avoid leaking secrets
+helm/secrets/config/application-*.properties
+api/src/main/resources/application-dev.properties
+
+# jenv
+.java-version

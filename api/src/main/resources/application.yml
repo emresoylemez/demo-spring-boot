@@ -1,0 +1,47 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+    banner-mode: "off"
+
+info:
+  app:
+    name: ${app.name}
+    description: Demo Service
+    version: ${app.version}
+
+server:
+  port: 8004
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: /logs
+      file-date-format: yyyy-MM-dd
+      prefix: access_log
+      suffix: .log
+      pattern: "{\"time\":\"%{yyyy-MM-dd'T'HH:mm:ss.SSS'Z'}t\",\"threadId\":\"%I\",\"hostName\":\"%h\",\"remoteIp\":\"%a\",\"forwardedFor\":\"%{X-Forwarded-For}i\",\"forwardedClientIp\":\"%{X-Forwarded-Phone-IP}i\",\"requestProtocol\":\"%H\",\"requestMethod\":\"%m\",\"url\":\"%U\",\"queryString\":\"%q\",\"sent\":\"%b bytes\",\"timeTakenProcess\":\"%D millisec\",\"timeTakenCommit\":\"%F millisec\",\"httpStatus\":\"%s\"}"
+
+
+hystrix:
+  streamEnabled: true
+  enabled: true
+
+logging:
+  level:
+    com.demo.client:
+      fractal:
+        FractalClient: DEBUG
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+
+uri:
+  fractal-api:localhost:8999
+
+demo-service:
+  partnerId: 5111acc7-c9b3-4d2a-9418-16e97b74b1e6
+  apiKey: OPoegZdEve7zzkiAgOf2k4rr9ZwFrxCl6nMUbtlH

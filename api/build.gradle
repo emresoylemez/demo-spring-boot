@@ -1,0 +1,135 @@
+apply plugin: 'groovy'
+apply plugin: 'jacoco'
+apply plugin: 'checkstyle'
+apply plugin: "com.gorylenko.gradle-git-properties"
+apply plugin: "spring-cloud-contract"
+apply plugin: 'io.spring.dependency-management'
+
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath group: "org.springframework.boot", name: 'spring-boot-gradle-plugin', version: "2.1.0.RELEASE"
+        classpath "gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.21"
+        classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:2.1.0.RELEASE"
+    }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:2.1.0.RELEASE"
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.2"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.enabled = true
+    }
+
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    '**/resource/**',
+                    '**/domain/**',
+                    '**/config/**',
+                    '**/exception/**'
+            ])
+        })
+    }
+}
+
+test {
+    jacoco {
+        excludes = ["**/resource/**"]
+    }
+
+    reports {
+        junitXml.enabled = false
+        html.enabled = true
+    }
+}
+
+test.finalizedBy(project.tasks.jacocoTestReport)
+
+dependencies {
+    compile project(':api-client')
+
+    compile(
+            'org.springframework.boot:spring-boot-starter-web',
+            'org.springframework.boot:spring-boot-starter-actuator',
+            'org.springframework.boot:spring-boot-starter-hateoas',
+            'org.springframework.boot:spring-boot-starter-web-services',
+            'org.springframework.cloud:spring-cloud-starter-openfeign',
+            'org.springframework.cloud:spring-cloud-starter-netflix-hystrix:2.1.0.RELEASE',
+            'org.springframework.boot:spring-boot-starter-validation' ,
+            'javax.xml.bind:jaxb-api:2.3.0',
+            'javax.activation:javax.activation-api:1.2.0',
+            'com.sun.xml.bind:jaxb-impl:2.3.0',
+            'com.sun.xml.bind:jaxb-core:2.3.0',
+
+            'io.springfox:springfox-swagger-ui:2.9.2',
+            'io.springfox:springfox-swagger2:2.9.2',
+
+            'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.8',
+            'net.logstash.logback:logstash-logback-encoder:5.2'
+    )
+
+    compile(group: 'org.springframework.cloud', name: 'spring-cloud-starter-kubernetes-all', version: '0.2.0.RELEASE') {
+        exclude group: "org.springframework.cloud", module: "spring-cloud-kubernetes-zipkin"
+        exclude group: "org.springframework.cloud", module: "spring-cloud-sleuth-zipkin"
+    }
+
+    compileOnly('org.projectlombok:lombok:1.18.6')
+
+    annotationProcessor('org.projectlombok:lombok:1.18.6')
+
+    runtime(
+            'org.springframework.boot:spring-boot-devtools',
+            'org.springframework.boot:spring-boot-starter-logging')
+
+    testCompile(
+            'org.springframework.boot:spring-boot-starter-test',
+            'junit:junit:4.12',
+            'org.mockito:mockito-core:2.17.0',
+            'org.hamcrest:hamcrest-all:1.3',
+            'org.codehaus.groovy:groovy-all:2.5.5',
+            'org.spockframework:spock-core:1.2-groovy-2.5',
+            'org.spockframework:spock-spring:1.2-groovy-2.5',
+            'org.springframework.cloud:spring-cloud-starter-contract-verifier',
+            'org.springframework.cloud:spring-cloud-starter-contract-stub-runner')
+
+}
+
+bootRun {
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+processResources {
+    if (System.getenv("LOG_TO_FILE") == "true") {
+        exclude '/logback-spring-stdout.xml'
+        rename '(.*)-file(.*)', '$1$2'
+    } else{
+        exclude '/logback-spring-file.xml'
+        rename '(.*)-stdout(.*)', '$1$2'
+    }
+}
+
+jar {
+    archivesBaseName="api"
+    project.version=""
+}
+
+
+compileJava.dependsOn(processResources)

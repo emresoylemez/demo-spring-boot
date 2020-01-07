@@ -1,0 +1,3 @@
+rootProject.name = 'demo-service'
+include 'api', 'api-performance', 'api-client'
+

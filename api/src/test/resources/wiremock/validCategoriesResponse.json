@@ -1,0 +1,33 @@
+{
+  "results": [
+    {
+      "id": "duplicateKey",
+      "name": "Revenue"
+    },
+    {
+      "id": "b6as2",
+      "name": "R&D Costs"
+    },
+    {
+      "id": "casd3",
+      "name": "Rent & Office"
+    },
+    {
+      "id": "dqwe4",
+      "name": "Operating Expense"
+    },
+    {
+      "id": "er4sd5",
+      "name": "Interest Expense"
+    },
+    {
+      "id": "fasd6",
+      "name": "Financing / Repayments"
+    },
+    {
+      "id": "gasd7",
+      "name": "Travel IT Cost"
+    }
+  ],
+  "links": {}
+}

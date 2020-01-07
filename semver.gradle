@@ -1,0 +1,17 @@
+static def getBuildNoDelimiter(){
+    "_"
+}
+
+static def getBuildNumber() {
+    def buildNo = "$System.env.BUILD_NUMBER"//"${env.BUILD_NUMBER}"
+    (buildNo != null && buildNo != "null") ? buildNo : 1
+}
+
+def getSemVerVersion() {
+    version +getBuildNoDelimiter() + getBuildNumber()
+}
+
+task('printSemVerVersion'){
+    println(getSemVerVersion())
+}
+

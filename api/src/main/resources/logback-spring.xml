@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property resource="application.properties"/>
+
+    <contextName>${spring.application.name}</contextName>
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %black(%d{HH:mm:ss.SSS}) %highlight(%-5level) [%green(%X{TraceId})] [%blue(%t)] %yellow(%logger{36}):
+                %logger %highlight(%marker) %msg%n%throwable
+            </Pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="Console"/>
+    </root>
+
+</configuration>

@@ -1,0 +1,7 @@
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+  "partner_name": "FracBox",
+  "partner_id": "5111acc7-c9b3-4d2a-9418-16e97b74b1e6",
+  "expires": 1800,
+  "token_type": "Bearer"
+}

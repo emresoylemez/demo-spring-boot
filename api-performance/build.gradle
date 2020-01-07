@@ -1,0 +1,19 @@
+apply plugin: 'scala'
+
+dependencies {
+    compile project(":api-client")
+    compile "org.scala-lang:scala-library:2.12.3"
+    testCompile 'io.gatling.highcharts:gatling-charts-highcharts:2.3.1'
+}
+
+task testPerformance(type: JavaExec) {
+    systemProperties = System.properties
+    description = 'Test load the with Gatling'
+    group = 'Load Test'
+    classpath = sourceSets.test.runtimeClasspath
+    main = 'io.gatling.app.Gatling'
+    args = [
+        '--simulation', 'com.demo',
+        '--results-folder', "${buildDir}/gatling-results",
+    ]
+}

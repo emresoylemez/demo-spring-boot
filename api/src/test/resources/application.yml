@@ -1,0 +1,49 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  security:
+    user:
+      name: ${security.user.name}
+      password: ${security.user.password}
+      role: ACTUATOR
+
+info:
+  app:
+    name: ${app.name}
+    description: This is Demo Service
+    version: ${app.version}
+
+management:
+  server:
+    servlet:
+      context-path: /actuator
+      security:
+        enabled: true
+        roles: ${spring.security.user.role}
+
+swagger:
+  enabled: false
+
+logging:
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level [ %X{X-B3-TraceId:-}, %X{X-B3-SpanId:-} ] %logger{36} - %msg%n."
+  file: logs/${spring.application.name}
+
+server:
+  port: 8004
+
+uri:
+  fractal-api: localhost:8999
+  demo-service: localhost:8004
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+
+demo-service:
+  partnerId: partnerId
+  apiKey: apiKey

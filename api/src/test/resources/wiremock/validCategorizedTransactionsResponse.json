@@ -1,0 +1,23 @@
+{
+  "links":{
+    "next":"next",
+    "prev":"string"
+  },
+  "results":[
+    {
+      "amount":100,
+      "description":"desc",
+      "valueDate":"string",
+      "transactionId":"string",
+      "transactionType":"ACTUAL",
+      "accountId":"string",
+      "companyId":0,
+      "bankId":0,
+      "bookingDate":"string",
+      "category":"string",
+      "currencyCode":"string",
+      "flow":"DEBIT",
+      "status":"string"
+    }
+  ]
+}
